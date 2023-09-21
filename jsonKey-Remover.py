@@ -1,15 +1,22 @@
-import yaml
 import json
 import os
 
 def process_all_of(data):
     if isinstance(data, dict):
         if 'allOf' in data:
-            inner_data_list = data['allOf']
-            del data['allOf']
-            for inner_data in inner_data_list:
-                for key, value in inner_data.items():
+            # allOf의 값이 딕셔너리인 경우
+            if isinstance(data['allOf'], dict):
+                for key, value in data['allOf'].items():
                     data[key] = value
+
+            # allOf의 값이 리스트인 경우
+            elif isinstance(data['allOf'], list):
+                for inner_data in data['allOf']:
+                    for key, value in inner_data.items():
+                        data[key] = value
+
+            del data['allOf']
+
             return process_all_of(data)  # 다시 재귀적으로 확인
         for key, value in data.items():
             data[key] = process_all_of(value)
@@ -33,4 +40,3 @@ for filename in os.listdir('target'):
         
         with open(os.path.join('result', filename), 'w') as file:
             json.dump(processed_data, file, indent=4)
-
