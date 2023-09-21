@@ -14,4 +14,9 @@
     ```
     python3 jsonKey-Remover.py
     ```
+    3-1. --format 옵션을 통해 출력결과물의 포맷이 선택 가능하다.
+    ```
+    python3 jsonKey-Remover.py --format yaml
+    ```
+    3-2. 가능한 format은 json, yaml 이다.
 4. Result 디렉토리가 생기고 내부에 allOf 키가 제거된 json 파일들이 생성되는 것을 확인한다.
